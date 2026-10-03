@@ -10,6 +10,8 @@ This repository contains **deployable web builds only**. Application source code
 
 CodeTrainer is an interactive code memorization and touch-typing trainer focused on learning programming syntax through repeated hands-on exercises.
 
+**Repository:** https://github.com/AlbertDirksen15/web_App_spublik
+
 **Live demo:** https://albertdirksen15.github.io/web_App_spublik/CodeTrainer/
 
 #### Highlights

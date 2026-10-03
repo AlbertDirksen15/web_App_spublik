@@ -21,13 +21,58 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout public showcase
         uses: actions/checkout@v4
+
+      - name: Prepare protected CodeTrainer production build
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p CodeTrainer/assets
+          BASE="https://albertdirksen15.github.io/CodeTrainer"
+          curl -fsSL "$BASE/index.html" -o CodeTrainer/index.html
+          JS_PATH=$(grep -oE '/CodeTrainer/assets/index-[A-Za-z0-9_-]+\.js' CodeTrainer/index.html | head -1)
+          CSS_PATH=$(grep -oE '/CodeTrainer/assets/index-[A-Za-z0-9_-]+\.css' CodeTrainer/index.html | head -1)
+          test -n "$JS_PATH"
+          test -n "$CSS_PATH"
+          curl -fsSL "$BASE$JS_PATH" -o "CodeTrainer/assets/$(basename "$JS_PATH")"
+          curl -fsSL "$BASE$CSS_PATH" -o "CodeTrainer/assets/$(basename "$CSS_PATH")"
+          for FILE in "Terminal Groove.mp3" "Night Terminal.mp3" favicon.ico manifest.json robots.txt logo192.png logo512.png; do
+            curl -fsSL "$BASE/${FILE// /%20}" -o "CodeTrainer/$FILE" || true
+          done
+          sed -i 's#/CodeTrainer/#/web_App_spublik/CodeTrainer/#g' CodeTrainer/index.html
+          sed -i 's#/CodeTrainer/#/web_App_spublik/CodeTrainer/#g' "CodeTrainer/assets/$(basename "$JS_PATH")"
+
+      - name: Obfuscate production JavaScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          JS_FILE=$(find CodeTrainer/assets -maxdepth 1 -name '*.js' -print -quit)
+          test -n "$JS_FILE"
+          npx --yes javascript-obfuscator@4.1.1 "$JS_FILE" \
+            --output "$JS_FILE.protected" \
+            --compact true \
+            --identifier-names-generator hexadecimal \
+            --string-array true \
+            --string-array-encoding base64 \
+            --string-array-threshold 0.75 \
+            --control-flow-flattening false \
+            --dead-code-injection false \
+            --self-defending false
+          mv "$JS_FILE.protected" "$JS_FILE"
+          test ! -e "$JS_FILE.map"
+
+      - name: Verify public package contains no source tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -d CodeTrainer/src
+          test ! -f CodeTrainer/package.json
+          test ! -f CodeTrainer/vite.config.js
+          find CodeTrainer -type f | sort
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

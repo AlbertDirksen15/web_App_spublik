@@ -29,7 +29,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p CodeTrainer/assets
-          ORIGIN="https://albertdirksen15.github.io"\n          BASE="$ORIGIN/CodeTrainer"
+          ORIGIN="https://albertdirksen15.github.io"
+          BASE="$ORIGIN/CodeTrainer"
           curl -fsSL "$BASE/index.html" -o CodeTrainer/index.html
           JS_PATH=$(grep -oE '/CodeTrainer/assets/index-[A-Za-z0-9_-]+\.js' CodeTrainer/index.html | head -1)
           CSS_PATH=$(grep -oE '/CodeTrainer/assets/index-[A-Za-z0-9_-]+\.css' CodeTrainer/index.html | head -1)

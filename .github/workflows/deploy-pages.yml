@@ -29,14 +29,14 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p CodeTrainer/assets
-          BASE="https://albertdirksen15.github.io/CodeTrainer"
+          ORIGIN="https://albertdirksen15.github.io"\n          BASE="$ORIGIN/CodeTrainer"
           curl -fsSL "$BASE/index.html" -o CodeTrainer/index.html
           JS_PATH=$(grep -oE '/CodeTrainer/assets/index-[A-Za-z0-9_-]+\.js' CodeTrainer/index.html | head -1)
           CSS_PATH=$(grep -oE '/CodeTrainer/assets/index-[A-Za-z0-9_-]+\.css' CodeTrainer/index.html | head -1)
           test -n "$JS_PATH"
           test -n "$CSS_PATH"
-          curl -fsSL "$BASE$JS_PATH" -o "CodeTrainer/assets/$(basename "$JS_PATH")"
-          curl -fsSL "$BASE$CSS_PATH" -o "CodeTrainer/assets/$(basename "$CSS_PATH")"
+          curl -fsSL "$ORIGIN$JS_PATH" -o "CodeTrainer/assets/$(basename "$JS_PATH")"
+          curl -fsSL "$ORIGIN$CSS_PATH" -o "CodeTrainer/assets/$(basename "$CSS_PATH")"
           for FILE in "Terminal Groove.mp3" "Night Terminal.mp3" favicon.ico manifest.json robots.txt logo192.png logo512.png; do
             curl -fsSL "$BASE/${FILE// /%20}" -o "CodeTrainer/$FILE" || true
           done

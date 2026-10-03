@@ -51,7 +51,7 @@ jobs:
           JS_FILE=$(find CodeTrainer/assets -maxdepth 1 -name '*.js' -print -quit)
           test -n "$JS_FILE"
           npx --yes javascript-obfuscator@4.1.1 "$JS_FILE" \
-            --output "$JS_FILE.protected" \
+            --output /tmp/codetrainer-protected.js \
             --compact true \
             --identifier-names-generator hexadecimal \
             --string-array true \
@@ -60,7 +60,7 @@ jobs:
             --control-flow-flattening false \
             --dead-code-injection false \
             --self-defending false
-          mv "$JS_FILE.protected" "$JS_FILE"
+          mv /tmp/codetrainer-protected.js "$JS_FILE"
           test ! -e "$JS_FILE.map"
 
       - name: Verify public package contains no source tree

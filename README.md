@@ -1,35 +1,13 @@
-# Public Web Apps
+# AlbertApps — browser demos
 
-A curated collection of production builds from my software projects.
+Canonical catalog: https://albertdirksen15.github.io/web_App_spublik/
 
-This repository contains **deployable web builds only**. Application source code is maintained separately.
+- `CodeTrainer/` — CodeTrainer demo
+- `noma/demo/` — Noma demo
+- `learningtracker/` — LearningTracker demo
 
-## Featured application
+This repository contains ready-to-run browser files. Application source belongs to the separate CodeTrainer, Noma and LearningTracker repositories. Never publish source trees, source maps, tokens or personal workspace exports here.
 
-### CodeTrainer
+Each private application workflow publishes only its own folder using the repository secret `ALBERTAPPS_PUBLISH_TOKEN`. The token must allow Contents read/write on this repository. The Pages workflow deploys the checked-in static files without fetching another website or checking out private source.
 
-CodeTrainer is an interactive code memorization and touch-typing trainer focused on learning programming syntax through repeated hands-on exercises.
-
-**Repository:** https://github.com/AlbertDirksen15/web_App_spublik
-
-**Live demo:** https://albertdirksen15.github.io/web_App_spublik/CodeTrainer/
-
-#### Highlights
-
-- Interactive code typing exercises
-- Course → lecture → ordered sub-exercise learning flow
-- Context-aware code explanations
-- MySQL and JavaScript learning content
-- RU / EN / DE theory languages
-- Progress tracking in the browser
-- Physical keyboard layout support
-- Virtual keyboard with active-key highlighting
-- Light / dark themes and audio modes
-
-#### Tech
-
-React · Vite · JavaScript · GitHub Pages
-
----
-
-This public repository is intended as a deployment showcase for portfolio and demonstration purposes.
+The catalog and application URLs are independent of `AlbertApps_Public`. Browser-delivered JavaScript remains downloadable even when minified and obfuscated; private source repositories do not change that browser requirement.

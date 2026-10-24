@@ -1,0 +1,10 @@
+{
+  "application": "Noma",
+  "version": "1.0.0-beta.1",
+  "channel": "latest",
+  "canonicalEdition": "demo",
+  "canonicalDemoUrl": "https://albertdirksen15.github.io/web_App_spublik/noma/demo/",
+  "edition": "demo",
+  "sourceCommit": "361d2ea93609c8527d081c2079d342768a4e0ed3"
+}
+
